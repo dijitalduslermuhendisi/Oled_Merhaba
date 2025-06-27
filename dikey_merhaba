@@ -1,0 +1,32 @@
+#include <Wire.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_SSD1306.h>
+
+#define EKRAN_GENISLIK 128
+#define EKRAN_YUKSEKLIK 32
+#define OLED_SIFIRLAMA -1
+
+Adafruit_SSD1306 ekran(EKRAN_GENISLIK, EKRAN_YUKSEKLIK, &Wire, OLED_SIFIRLAMA);
+
+void setup() {
+  Wire.begin(4, 5);
+  
+  if (!ekran.begin(SSD1306_SWITCHCAPVCC, 0x3C)) {
+    while (true);
+  }
+
+  ekran.setRotation(3);
+  ekran.clearDisplay();
+  ekran.setTextSize(2);
+  ekran.setTextColor(SSD1306_WHITE);
+
+  for (int i = 0; i < strlen("MERHABA"); i++) {
+    ekran.setCursor(EKRAN_GENISLIK / 2 - 10, i * 16);
+    ekran.write("MERHABA"[i]);
+  }
+
+  ekran.display();
+}
+
+void loop() {
+}
